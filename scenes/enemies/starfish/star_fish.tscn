@@ -8,6 +8,8 @@
 [ext_resource type="AnimationLibrary" uid="uid://b6mdwitmfk172" path="res://scenes/enemies/starfish/starfish_anims.tres" id="3_n0s4y"]
 [ext_resource type="Script" uid="uid://bnqo2ailkya4w" path="res://scenes/enemies/starfish/states/attack.gd" id="6_ay34g"]
 [ext_resource type="Script" uid="uid://c4ysisgbh3ld8" path="res://scenes/enemies/starfish/states/run.gd" id="6_jbdrp"]
+[ext_resource type="Script" uid="uid://bavto3h5kppwg" path="res://scenes/enemies/states/hurt.gd" id="9_o8gxc"]
+[ext_resource type="Script" uid="uid://c3iiqmcihwu37" path="res://scenes/enemies/states/dead.gd" id="10_jxpdw"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_n0s4y"]
 size = Vector3(4, 2, 8)
@@ -82,3 +84,9 @@ script = ExtResource("6_ay34g")
 
 [node name="Run" type="Node" parent="States" index="1" unique_id=1098286459]
 script = ExtResource("6_jbdrp")
+
+[node name="Hurt" type="Node" parent="States" index="2" unique_id=405470693]
+script = ExtResource("9_o8gxc")
+
+[node name="Dead" type="Node" parent="States" index="3" unique_id=1753763330]
+script = ExtResource("10_jxpdw")

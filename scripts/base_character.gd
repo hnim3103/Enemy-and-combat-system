@@ -33,6 +33,7 @@ const OPPOSITE_DIRECTION: Dictionary = {
 
 @export var attack_damage: int = 1
 @export var max_health: int = 3
+@export var carry_speed_scale: float = 0.6
 var health: int = max_health
 
 ## Turn off to make the character stand absolutely still: no gravity, no move_and_slide(). Used

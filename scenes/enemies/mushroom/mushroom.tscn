@@ -4,6 +4,9 @@
 [ext_resource type="Script" uid="uid://22t4g5yf1p0v" path="res://scenes/enemies/mushroom/mushroom.gd" id="2_a7lw7"]
 [ext_resource type="Texture2D" uid="uid://d1bmdoh4let33" path="res://assets/monsters/mushroom/mushroom_sprite_sheet.png" id="2_x1u07"]
 [ext_resource type="Script" uid="uid://b3jkvkb1455e5" path="res://scenes/enemies/states/run.gd" id="4_a7lw7"]
+[ext_resource type="Script" uid="uid://bvv36o7f0oebf" path="res://scripts/hit_area_3d.gd" id="4_pdypp"]
+[ext_resource type="Script" uid="uid://cwjx4xrwceapx" path="res://scenes/enemies/states/carried.gd" id="5_1lu8u"]
+[ext_resource type="Script" uid="uid://ktli0hgmnbv5" path="res://scenes/enemies/states/thrown.gd" id="6_pdypp"]
 
 [sub_resource type="Animation" id="Animation_x1u07"]
 length = 0.001
@@ -137,6 +140,9 @@ _data = {
 &"run_up": SubResource("Animation_1lu8u")
 }
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_ackv6"]
+radius = 0.6
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x1u07"]
 radius = 0.4781494
 height = 0.9937744
@@ -144,6 +150,7 @@ height = 0.9937744
 [node name="Mushroom" unique_id=1982557997 instance=ExtResource("1_k7m86")]
 collision_layer = 8
 script = ExtResource("2_a7lw7")
+carry_speed_scale = 0.8
 
 [node name="Sprite3D" parent="." index="0"]
 offset = Vector2(0, 14)
@@ -162,9 +169,26 @@ target_position = Vector3(0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.9)
 target_position = Vector3(0, -1.5, 0)
 
+[node name="HitArea3D" type="Area3D" parent="Direction" index="2" unique_id=2124173156]
+collision_layer = 0
+collision_mask = 16
+script = ExtResource("4_pdypp")
+metadata/_custom_type_script = "uid://bvv36o7f0oebf"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Direction/HitArea3D" index="0" unique_id=736646282]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+shape = SubResource("SphereShape3D_ackv6")
+disabled = true
+
 [node name="CollisionShape3D" parent="." index="3"]
-transform = Transform3D(1, 0, 0, 0, 1.5916369, 0, 0, 0, 0.9811617, 0, 0.72176903, 0)
+transform = Transform3D(1.65, 0, 0, 0, 1.65, 0, 0, 0, 1.65, 0, 0.75, 0)
 shape = SubResource("CapsuleShape3D_x1u07")
 
 [node name="Run" type="Node" parent="States" index="0" unique_id=428502146]
 script = ExtResource("4_a7lw7")
+
+[node name="Carried" type="Node" parent="States" index="1" unique_id=871042525]
+script = ExtResource("5_1lu8u")
+
+[node name="Thrown" type="Node" parent="States" index="2" unique_id=1027200109]
+script = ExtResource("6_pdypp")

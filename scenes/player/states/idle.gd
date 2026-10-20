@@ -4,6 +4,9 @@ func enter() -> void:
 	obj.change_animation("idle")
 
 func update(_delta: float) -> void:
+	if control_knife():
+		return
+
 	if control_carry():
 		return
 

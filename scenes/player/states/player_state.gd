@@ -59,6 +59,13 @@ func control_carry() -> bool:
 	
 	return false
 
+func control_knife() -> bool:
+	if Input.is_action_just_pressed("throwing_knife"):
+		change_state((fsm.states.throwingknife))
+		return true
+		
+	return false
+
 
 func take_damage(damage: int = 1) -> void:
 	obj.take_damage(damage)

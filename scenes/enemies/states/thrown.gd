@@ -6,7 +6,7 @@ func enter() -> void:
 
 func exit() -> void:
 	obj.stop_horizontal()
-	_hit_shape().set_deffered("disabled", true)
+	_hit_shape().set_deferred("disabled", true)
 
 func update(_delta: float) -> void:
 	if obj.is_on_floor() and obj.velocity.y <= 0.0:
@@ -16,4 +16,4 @@ func take_damage(_damage_dir: Vector3, _damage: float) -> void:
 	pass
 
 func _hit_shape() -> CollisionShape3D:
-	return obj.get_node("Directon/HitArea3D/CollisionShape3D")
+	return obj.get_node("Direction/HitArea3D/CollisionShape3D")

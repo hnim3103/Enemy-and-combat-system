@@ -19,6 +19,7 @@ var down_ray_cast: RayCast3D
 
 # Area that detects the fox
 var detect_player_area: Area3D
+var detect_player_ray: RayCast3D
 var found_player: Node3D = null
 
 
@@ -34,6 +35,8 @@ func _init_ray_cast() -> void:
 		front_ray_cast = $Direction/FrontRayCast3D
 	if has_node("Direction/DownRayCast3D"):
 		down_ray_cast = $Direction/DownRayCast3D
+	if has_node("Direction/DetectPlayerRayCast3D"):
+		detect_player_ray = $Direction/DetectPlayerRayCast3D
 
 
 func _init_detect_player_area() -> void:
@@ -48,6 +51,23 @@ func _init_hurt_area() -> void:
 	if has_node("Direction/HurtArea3D"):
 		$Direction/HurtArea3D.hurt.connect(_on_hurt_area_3d_hurt)
 
+func _physics_process(delta: float) -> void:
+	_check_player_ray()
+	super._physics_process(delta)
+
+func _check_player_ray() -> void:
+	if detect_player_ray == null or not detect_player_ray.enabled:
+		return
+
+	var collider := detect_player_ray.get_collider()
+	var seen: Node3D = collider if collider is Player else null
+	if seen == found_player:
+		return
+	if seen != null:
+		_on_body_entered(seen)
+	else:
+		_on_body_exited(found_player)
+
 
 func is_touch_wall() -> bool:
 	return front_ray_cast != null and front_ray_cast.is_colliding()
@@ -60,11 +80,17 @@ func is_can_fall() -> bool:
 func enable_check_player_in_sight() -> void:
 	if detect_player_area != null:
 		detect_player_area.get_node("CollisionShape3D").disabled = false
+	if detect_player_ray != null:
+		detect_player_ray.enabled = true
 
 
 func disable_check_player_in_sight() -> void:
 	if detect_player_area != null:
 		detect_player_area.get_node("CollisionShape3D").disabled = true
+	if detect_player_ray != null:
+		detect_player_ray.enabled = false
+		if found_player != null:
+			_on_body_exited(found_player)
 
 
 func _on_body_entered(body: Node3D) -> void:
