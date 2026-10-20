@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://b6x0rou01m657"]
+
+[ext_resource type="Script" uid="uid://de6fikxpa5blo" path="res://scenes/enemies/barrel/barrel_bullet.gd" id="1_2brjt"]
+[ext_resource type="Texture2D" uid="uid://b8dbnog54f7et" path="res://assets/monsters/barrel/barrel_bullet.png" id="2_mmeu8"]
+[ext_resource type="Script" uid="uid://bvv36o7f0oebf" path="res://scripts/hit_area_3d.gd" id="3_r0yv6"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2brjt"]
+bounce = 0.8
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qa536"]
+radius = 0.2
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_282k6"]
+radius = 0.3
+
+[node name="BarrelBullet" type="RigidBody3D" unique_id=1327452535]
+collision_layer = 32
+physics_material_override = SubResource("PhysicsMaterial_2brjt")
+gravity_scale = 0.0
+contact_monitor = true
+max_contacts_reported = 1
+script = ExtResource("1_2brjt")
+
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=1769657235]
+pixel_size = 0.0625
+billboard = 1
+shaded = true
+texture_filter = 0
+texture = ExtResource("2_mmeu8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=743418]
+shape = SubResource("SphereShape3D_qa536")
+
+[node name="HitArea3D" type="Area3D" parent="." unique_id=24460012]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("3_r0yv6")
+metadata/_custom_type_script = "uid://bvv36o7f0oebf"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitArea3D" unique_id=1079365436]
+shape = SubResource("SphereShape3D_282k6")

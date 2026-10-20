@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://pw26o3khod3a"]
+
+[ext_resource type="PackedScene" path="res://scenes/base_character.tscn" id="1_dlkwl"]
+[ext_resource type="Script" uid="uid://cpedytl80c806" path="res://scenes/enemies/barrel/barrel.gd" id="2_0tkev"]
+[ext_resource type="Texture2D" uid="uid://8xv3tso56oou" path="res://assets/monsters/barrel/barrel_sprite_sheet.png" id="2_4oag7"]
+[ext_resource type="AnimationLibrary" uid="uid://s0xkp2t7er6t" path="res://scenes/enemies/barrel/barrel_anims.tres" id="3_y2kdn"]
+[ext_resource type="Script" uid="uid://bec57758p7ipw" path="res://scripts/node3d_factory.gd" id="4_sw8wd"]
+[ext_resource type="PackedScene" uid="uid://b6x0rou01m657" path="res://scenes/enemies/barrel/barrel_bullet.tscn" id="5_yt1yp"]
+[ext_resource type="Script" uid="uid://c18amjgmx1wqf" path="res://scenes/enemies/states/idle.gd" id="7_wwigk"]
+[ext_resource type="Script" uid="uid://73rph41t5lt1" path="res://scenes/enemies/states/shoot.gd" id="8_5x77b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ackv6"]
+size = Vector3(4, 2, 8)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_y2kdn"]
+radius = 0.55
+height = 1.5
+
+[node name="Barrel" unique_id=1053180670 instance=ExtResource("1_dlkwl")]
+collision_layer = 8
+script = ExtResource("2_0tkev")
+bullet_speed = 12.0
+
+[node name="Sprite3D" parent="." index="0"]
+offset = Vector2(0, 15.5)
+flip_h = true
+texture = ExtResource("2_4oag7")
+hframes = 3
+vframes = 9
+frame = 1
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries/ = ExtResource("3_y2kdn")
+
+[node name="BulletFactory" type="Marker3D" parent="Direction" index="0" unique_id=98427711]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0.8)
+script = ExtResource("4_sw8wd")
+product_packed_scene = ExtResource("5_yt1yp")
+target_container_name = &"Bullets"
+metadata/_custom_type_script = "uid://bec57758p7ipw"
+
+[node name="DetectPlayerArea3D" type="Area3D" parent="Direction" index="1" unique_id=2128762314]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Direction/DetectPlayerArea3D" index="0" unique_id=1756398508]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 4)
+shape = SubResource("BoxShape3D_ackv6")
+
+[node name="CollisionShape3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, 0)
+shape = SubResource("CapsuleShape3D_y2kdn")
+
+[node name="Idle" type="Node" parent="States" index="0" unique_id=1778012204]
+script = ExtResource("7_wwigk")
+
+[node name="Shoot" type="Node" parent="States" index="1" unique_id=1147659078]
+script = ExtResource("8_5x77b")

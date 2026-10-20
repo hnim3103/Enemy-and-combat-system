@@ -1,0 +1,170 @@
+[gd_scene format=3 uid="uid://d356gwifde3oj"]
+
+[ext_resource type="PackedScene" path="res://scenes/base_character.tscn" id="1_k7m86"]
+[ext_resource type="Script" uid="uid://22t4g5yf1p0v" path="res://scenes/enemies/mushroom/mushroom.gd" id="2_a7lw7"]
+[ext_resource type="Texture2D" uid="uid://d1bmdoh4let33" path="res://assets/monsters/mushroom/mushroom_sprite_sheet.png" id="2_x1u07"]
+[ext_resource type="Script" uid="uid://b3jkvkb1455e5" path="res://scenes/enemies/states/run.gd" id="4_a7lw7"]
+
+[sub_resource type="Animation" id="Animation_x1u07"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_k7m86"]
+resource_name = "new_animation"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 3, 6, 3]
+}
+
+[sub_resource type="Animation" id="Animation_a7lw7"]
+resource_name = "run_left"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 4, 7, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_0ra7h"]
+resource_name = "run_right"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [1, 4, 7, 4]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_1lu8u"]
+resource_name = "run_up"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [2, 5, 8, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_x1u07"]
+_data = {
+&"RESET": SubResource("Animation_x1u07"),
+&"run_down": SubResource("Animation_k7m86"),
+&"run_left": SubResource("Animation_a7lw7"),
+&"run_right": SubResource("Animation_0ra7h"),
+&"run_up": SubResource("Animation_1lu8u")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x1u07"]
+radius = 0.4781494
+height = 0.9937744
+
+[node name="Mushroom" unique_id=1982557997 instance=ExtResource("1_k7m86")]
+collision_layer = 8
+script = ExtResource("2_a7lw7")
+
+[node name="Sprite3D" parent="." index="0"]
+offset = Vector2(0, 14)
+texture = ExtResource("2_x1u07")
+hframes = 3
+vframes = 6
+
+[node name="AnimationPlayer" parent="." index="1"]
+libraries/ = SubResource("AnimationLibrary_x1u07")
+
+[node name="FrontRayCast3D" type="RayCast3D" parent="Direction" index="0" unique_id=396037838]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+target_position = Vector3(0, 0, 1)
+
+[node name="DownRayCast3D" type="RayCast3D" parent="Direction" index="1" unique_id=1738697122]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0.9)
+target_position = Vector3(0, -1.5, 0)
+
+[node name="CollisionShape3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1.5916369, 0, 0, 0, 0.9811617, 0, 0.72176903, 0)
+shape = SubResource("CapsuleShape3D_x1u07")
+
+[node name="Run" type="Node" parent="States" index="0" unique_id=428502146]
+script = ExtResource("4_a7lw7")
